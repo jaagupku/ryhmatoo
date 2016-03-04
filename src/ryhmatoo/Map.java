@@ -9,9 +9,9 @@ public class Map {
 	private Random rng = new Random();
 	
 	public Map(int sizeX, int sizeY){
-		this.cells = new int[sizeX][sizeY];
-		this.sizeX = sizeX;
-		this.sizeY = sizeY;
+		this.sizeX = (sizeX > 4 ? sizeX : 4);
+		this.sizeY = (sizeY > 4 ? sizeY : 4);
+		this.cells = new int[this.sizeX][this.sizeY];
 		fillWorldRandom();
 	}
 	

@@ -54,9 +54,10 @@ public class World {
 	public void printWorld() {
 		for(int x = 0; x < map.getSizeX(); x++) {
 			for(int y = 0; y < map.getSizeY(); y++) {
-				if(map.getCell(x, y) == Map.WALL) System.out.print(Menu.BLOCK + "" + Menu.BLOCK);
+				int cell = map.getCell(x, y);
+				if(cell == Map.WALL) System.out.print(Menu.BLOCK + "" + Menu.BLOCK);
 				else if(player.getX() == x && player.getY() == y) System.out.print(Menu.SWORD + "" + Menu.MAN);
-				else if(map.getCell(x, y) == Map.EMPTY) System.out.print(Menu.FLOOR + "" + Menu.FLOOR);
+				else if(cell == Map.EMPTY) System.out.print(Menu.FLOOR + "" + Menu.FLOOR);
 				else System.out.print("MISSING TILE");
 			}
 			System.out.println();

@@ -1,6 +1,9 @@
 package ryhmatoo;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class World {
 	public static final int NORTH = 0, SOUTH = 1, WEST = 2, EAST = 3; // Directions
@@ -14,25 +17,39 @@ public class World {
 		this.map = map;
 	}
 	
+	public World(File file){
+		StringBuilder sb = new StringBuilder();
+		Scanner input = null;
+		try {
+			input = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		while(input.hasNextLine()){
+			String line = input.nextLine();
+			if(!line.startsWith("//")) sb.append(line);
+		}
+		input.close();
+		String[] mapLines = sb.toString().split(";");
+		for(String st : mapLines){
+			String[] command = st.split("=");
+			if(command[0].equalsIgnoreCase("map_size")){
+				String[] values = command[1].split(",");
+				map = new Map(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
+			}
+			else if (command[0].equalsIgnoreCase("map_tiles")){
+				map.loadMapFromCharArray(command[1].toCharArray());
+			}
+			else if (command[0].equalsIgnoreCase("player_spawn")){
+				String[] values = command[1].split(",");
+				player = new Player(Integer.parseInt(values[0]), Integer.parseInt(values[1]), 100);
+			}
+		}
+	}
+	
 	public void movePlayer(int dir){
 		switch(dir){
 			case World.NORTH: {
-				if(map.getCell(player.getX()-1, player.getY()) != Map.WALL){
-					player.setX(player.getX()-1);
-				} else {
-					System.out.println("You can't walk there.");
-				}
-				break;
-			}
-			case World.SOUTH: {
-				if(map.getCell(player.getX()+1, player.getY()) != Map.WALL){
-					player.setX(player.getX()+1);
-				} else {
-					System.out.println("You can't walk there.");
-				}
-				break;
-			}
-			case World.WEST: {
 				if(map.getCell(player.getX(), player.getY()-1) != Map.WALL){
 					player.setY(player.getY()-1);
 				} else {
@@ -40,9 +57,25 @@ public class World {
 				}
 				break;
 			}
-			case World.EAST: {
+			case World.SOUTH: {
 				if(map.getCell(player.getX(), player.getY()+1) != Map.WALL){
 					player.setY(player.getY()+1);
+				} else {
+					System.out.println("You can't walk there.");
+				}
+				break;
+			}
+			case World.WEST: {
+				if(map.getCell(player.getX()-1, player.getY()) != Map.WALL){
+					player.setX(player.getX()-1);
+				} else {
+					System.out.println("You can't walk there.");
+				}
+				break;
+			}
+			case World.EAST: {
+				if(map.getCell(player.getX()+1, player.getY()) != Map.WALL){
+					player.setX(player.getX()+1);
 				} else {
 					System.out.println("You can't walk there.");
 				}
@@ -52,8 +85,8 @@ public class World {
 	}
 	
 	public void printWorld() {
-		for(int x = 0; x < map.getSizeX(); x++) {
-			for(int y = 0; y < map.getSizeY(); y++) {
+		for(int y = 0; y < map.getSizeY(); y++) {
+			for(int x = 0; x < map.getSizeX(); x++) {
 				int cell = map.getCell(x, y);
 				if(cell == Map.WALL) System.out.print(Menu.BLOCK + "" + Menu.BLOCK);
 				else if(player.getX() == x && player.getY() == y) System.out.print(Menu.SWORD + "" + Menu.MAN);

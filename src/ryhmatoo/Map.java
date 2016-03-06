@@ -15,8 +15,7 @@ public class Map {
 	public Map(int sizeX, int sizeY){
 		this.sizeX = (sizeX > 4 ? sizeX : 4);
 		this.sizeY = (sizeY > 4 ? sizeY : 4);
-		this.cells = new Integer[this.sizeX][this.sizeY];
-		fillWorldRandom();
+		this.cells = new Integer[this.sizeY][this.sizeX];
 	}
 	
 	public Map(File file){
@@ -37,30 +36,38 @@ public class Map {
 			data.add(ridaInt);
 		}
 		input.close();
-		sizeX = data.size();
-		sizeY = data.get(0).length;
-		cells = data.toArray(new Integer[sizeX][sizeY]);
+		sizeY = data.size();
+		sizeX = data.get(0).length;
+		cells = data.toArray(new Integer[sizeY][sizeX]);
 	}
 	
-	private void changeMapTile(int x, int y, int tile){
-		cells[x][y] = tile;
+	public void changeMapTile(int x, int y, int tile){
+		cells[y][x] = tile;
 	}
 	
-	private void fillWorldRandom(){
+	public void loadMapFromCharArray(char[] c){
+		for(int x = 0; x < getSizeX(); x++) {
+			for(int y = 0; y < getSizeY(); y++) {
+				changeMapTile(x, y, Character.getNumericValue(c[x+y*getSizeX()]));
+			}
+		}
+	}
+	
+	public void fillWorldRandom(){
 		for(int x = 0; x < sizeX; x++) {
 			for(int y = 0; y < sizeY; y++) {
 				if(x == 0 || x == sizeX-1 || y == 0 || y == sizeY-1) {
-					cells[x][y] = WALL;
+					changeMapTile(x, y, WALL);
 				} else {
-					if(rng.nextInt(4)==0) cells[x][y] = WALL;
-					else cells[x][y] = EMPTY;
+					if(rng.nextInt(4)==0) changeMapTile(x, y, WALL);
+					else changeMapTile(x, y, EMPTY);
 				}
 			}
 		}
 	}
 	
 	public int getCell(int x, int y){
-		return (cells[x][y] == null ? -1 : cells[x][y]);
+		return (cells[y][x] == null ? -1 : cells[y][x]);
 	}
 
 	public int getSizeX() {

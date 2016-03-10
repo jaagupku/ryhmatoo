@@ -1,4 +1,5 @@
 // map_size peab olema enne map_tiles.
+// kommentaar peab olema eraldi real, st. ei saa olla mingi rea lõpus.
 map_size=12,10;
 map_tiles=
 111111111111

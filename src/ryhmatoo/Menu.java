@@ -34,7 +34,7 @@ public class Menu {
 		}
 	}
 	
-	public static void game() {
+	private static void game() {
 		String input;
 		System.out.println("Type \"help\" for help or \"exit\" to exit game.");
 		while(true) {
@@ -45,7 +45,7 @@ public class Menu {
 		}
 	}
 	
-	public static void processCommand(String input) {
+	private static void processCommand(String input) {
 		String[] command = input.split(" ");
 		
 		if(command[0].equalsIgnoreCase("move")) {

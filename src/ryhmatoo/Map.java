@@ -53,7 +53,7 @@ public class Map {
 		}
 	}
 	
-	public void fillWorldRandom(){
+	private void fillWorldRandom(){
 		for(int x = 0; x < sizeX; x++) {
 			for(int y = 0; y < sizeY; y++) {
 				if(x == 0 || x == sizeX-1 || y == 0 || y == sizeY-1) {

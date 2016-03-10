@@ -11,6 +11,42 @@ public class Player {
 		this.maxHealth = maxHealth;
 	}
 	
+	public void move(World w, int dir){
+		switch(dir){
+		case World.NORTH: {
+			if(w.isCellEmpty(getX(), getY()-1)){
+				setY(getY()-1);
+			} else {
+				System.out.println("You can't walk there.");
+			}
+			break;
+		}
+		case World.SOUTH: {
+			if(w.isCellEmpty(getX(), getY()+1)){
+				setY(getY()+1);
+			} else {
+				System.out.println("You can't walk there.");
+			}
+			break;
+		}
+		case World.WEST: {
+			if(w.isCellEmpty(getX()-1, getY())){
+				setX(getX()-1);
+			} else {
+				System.out.println("You can't walk there.");
+			}
+			break;
+		}
+		case World.EAST: {
+			if(w.isCellEmpty(getX()+1, getY())){
+				setX(getX()+1);
+			} else {
+				System.out.println("You can't walk there.");
+			}
+			break;
+		}
+		}
+	}
 
 	public int getX() {
 		return x;

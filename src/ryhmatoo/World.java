@@ -48,40 +48,11 @@ public class World {
 	}
 	
 	public void movePlayer(int dir){
-		switch(dir){
-			case World.NORTH: {
-				if(map.getCell(player.getX(), player.getY()-1) != Map.WALL){
-					player.setY(player.getY()-1);
-				} else {
-					System.out.println("You can't walk there.");
-				}
-				break;
-			}
-			case World.SOUTH: {
-				if(map.getCell(player.getX(), player.getY()+1) != Map.WALL){
-					player.setY(player.getY()+1);
-				} else {
-					System.out.println("You can't walk there.");
-				}
-				break;
-			}
-			case World.WEST: {
-				if(map.getCell(player.getX()-1, player.getY()) != Map.WALL){
-					player.setX(player.getX()-1);
-				} else {
-					System.out.println("You can't walk there.");
-				}
-				break;
-			}
-			case World.EAST: {
-				if(map.getCell(player.getX()+1, player.getY()) != Map.WALL){
-					player.setX(player.getX()+1);
-				} else {
-					System.out.println("You can't walk there.");
-				}
-				break;
-			}
-		}
+		player.move(this, dir);
+	}
+	
+	public boolean isCellEmpty(int x, int y){
+		return map.getCell(x, y) != Map.WALL;
 	}
 	
 	public void printWorld() {

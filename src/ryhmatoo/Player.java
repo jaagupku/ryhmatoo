@@ -3,12 +3,14 @@ package ryhmatoo;
 public class Player {
 	private int x, y;
 	private int maxHealth, health;
+	private int xp, level;
 	
 	public Player(int x, int y, int maxHealth) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.maxHealth = maxHealth;
+		health = maxHealth;
 	}
 	
 	public void move(World w, int dir){
@@ -45,6 +47,9 @@ public class Player {
 			}
 			break;
 		}
+		}
+		if(w.getCell(getX(), getY()) == Map.DOOR && w.canGoToNextLevel()){
+			Game.world = Game.levels[1];
 		}
 	}
 

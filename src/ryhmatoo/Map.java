@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Map {
-	public static final int WALL = 1, EMPTY = 0; // Map tiles
+	public static final int WALL = 1, EMPTY = 0, DOOR = 2; // Map tiles
 	private Integer[][] cells;
 	private int sizeX, sizeY;
 	private Random rng = new Random();
@@ -16,6 +16,7 @@ public class Map {
 		this.sizeX = (sizeX > 4 ? sizeX : 4);
 		this.sizeY = (sizeY > 4 ? sizeY : 4);
 		this.cells = new Integer[this.sizeY][this.sizeX];
+		fillWorldRandom();
 	}
 	
 	public Map(File file){

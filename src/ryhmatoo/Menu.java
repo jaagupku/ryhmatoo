@@ -3,7 +3,7 @@ package ryhmatoo;
 import java.util.Scanner;
 
 public class Menu {
-	public static final char BLOCK = '\u2588', FLOOR = '\u2591', SWORD = 'i', MAN = '\u263A';
+	public static final char BLOCK = '\u2588', FLOOR = '\u2591', SWORD = 'i', MAN = '\u263A', KEY='k', DOOR = '\u00B6';
 	private static Scanner sc = new Scanner(System.in);
 	
 	public static void displayWelcomeScreen() {
@@ -53,19 +53,21 @@ public class Menu {
 				System.out.println("Could you just say \"move <north|south|west|east>\"");
 			} else {
 				if(command[1].equalsIgnoreCase("north")) {
-					Game.w.movePlayer(World.NORTH);
+					Game.world.movePlayer(World.NORTH);
 				} else if(command[1].equalsIgnoreCase("south")) {
-					Game.w.movePlayer(World.SOUTH);
+					Game.world.movePlayer(World.SOUTH);
 				} else if(command[1].equalsIgnoreCase("west")) {
-					Game.w.movePlayer(World.WEST);
+					Game.world.movePlayer(World.WEST);
 				} else if(command[1].equalsIgnoreCase("east")) {
-					Game.w.movePlayer(World.EAST);
+					Game.world.movePlayer(World.EAST);
 				} else {
 					System.out.println("Could you just say \"move <north|south|west|east>\"");
 				}
 			}
+		} else if(command[0].equalsIgnoreCase("take")){	
+			Game.world.take();
 		} else if(command[0].equalsIgnoreCase("look")) {
-			Game.w.printWorld();
+			Game.world.printWorld();
 		} else if(command[0].equalsIgnoreCase("help")) {
 			System.out.println("Commands:\nmove <north|south|west|east> - to move around.\nlook - shows map\nexit - exits game mode.");
 		} else {

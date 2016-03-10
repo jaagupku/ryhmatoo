@@ -60,7 +60,11 @@ public class World {
 	}
 	
 	public boolean isCellEmpty(int x, int y){
-		if(map.getCell(x, y) == Map.WALL || (map.getCell(x, y) == Map.DOOR && !key.isTaken())){
+		if(map.getCell(x, y) == Map.WALL){
+			return false;
+		}
+		else if((map.getCell(x, y) == Map.DOOR && !key.isTaken())) {
+			System.out.println("Door is locked. You need a Key.");
 			return false;
 		}
 		return true;
@@ -74,6 +78,9 @@ public class World {
 		if(player.getX() == key.getX() && player.getY() == key.getY() && !key.isTaken()){
 			key.setTaken(true);
 			System.out.println("You picked up a " + key.getName());
+		}
+		else {
+			System.out.println("You look at the ground.\nThere was nothing valuable to take.");
 		}
 	}
 	

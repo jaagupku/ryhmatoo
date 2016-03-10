@@ -1,6 +1,6 @@
 package ryhmatoo;
 
-public class Player {
+public class Player implements Fighter {
 	private int x, y;
 	private int maxHealth, health;
 	private int xp, level;
@@ -67,5 +67,17 @@ public class Player {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	@Override
+	public void attackOther(Fighter o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void defendFromAttack(int dmg) {
+		// TODO Auto-generated method stub
+		
 	}
 }

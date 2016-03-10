@@ -3,12 +3,13 @@ package ryhmatoo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class World {
 	public static final int NORTH = 0, SOUTH = 1, WEST = 2, EAST = 3; // Directions
 	private Player player;
-	private ArrayList<Monster> monsters;
+	private List<Monster> monsters;
 	private Key key;
 	private Map map;
 	

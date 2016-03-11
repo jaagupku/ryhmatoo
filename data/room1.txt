@@ -2,8 +2,8 @@
 // kommentaar peab olema eraldi real, st. ei saa olla mingi rea lõpus.
 map_size=12,10;
 map_tiles=
-111111111111
-100000000002
+111111011111
+100000000000
 101111111001
 101100001001
 101001101101
@@ -13,5 +13,6 @@ map_tiles=
 110101010101
 111111111111
 ;
-player_spawn=10,1;
-key_loc=8,1;
+player_spawn=9,1;
+room_right=2;
+room_up=3;

@@ -48,10 +48,6 @@ public class Player implements Fighter {
 			break;
 		}
 		}
-		if(w.getCell(getX(), getY()) == Map.DOOR && w.canGoToNextLevel()){
-			System.out.println("You unlocked the door and enterd it.\nYou found yourself in a new room.");
-			Game.world = Game.levels[1];
-		}
 	}
 
 	public int getX() {

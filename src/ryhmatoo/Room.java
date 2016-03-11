@@ -113,6 +113,6 @@ public class Room {
 	public void setEntranceY(int entranceY) {
 		if(entranceY < 0) this.entranceY = 0;
 		else if(entranceY >= getSizeY()) this.entranceY = getSizeY()-1;
-		else this.entranceX = entranceY;
+		else this.entranceY = entranceY;
 	}
 }

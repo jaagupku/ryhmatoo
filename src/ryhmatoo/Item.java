@@ -1,15 +1,17 @@
 package ryhmatoo;
 
-public class Key {
+public class Item  implements Drawable {
 	private int x, y;
 	private String name;
 	private boolean taken;
+	private String img;
 
-	public Key(int x, int y, String name) {
+	public Item(int x, int y, String name, String img){
 		super();
 		this.x = x;
 		this.y = y;
 		this.name = name;
+		this.img = img;
 		taken = false;
 	}
 	
@@ -19,6 +21,10 @@ public class Key {
 	
 	public boolean isTaken(){
 		return taken;
+	}
+	
+	public String getImage(){
+		return img;
 	}
 
 	public int getX() {

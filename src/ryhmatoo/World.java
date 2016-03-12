@@ -22,7 +22,7 @@ public class World {
 	}
 	
 	public void movePlayer(int dir) {
-		player.move(this, dir);
+		player.move(currentRoom, dir);
 		int nextRoom = -1;
 		if(player.getX() < 0){
 			nextRoom = currentRoom.getRoomNext(Room.LEFT);
@@ -49,20 +49,11 @@ public class World {
 		player.setY(currentRoom.getEntranceY());
 	}
 	
-	public boolean isCellEmpty(int x, int y){
-		if(x < 0 || x >= currentRoom.getSizeX() || y < 0 || y >= currentRoom.getSizeY()){
-			return true;
-		}
-		if(currentRoom.getCell(x, y) == Map.WALL){
-			return false;
-		}
-		return true;
+	public void printWorld() {
+		System.out.print(currentRoom.getRoomAsString(player));
 	}
 	
-	public void printWorld() {
-		StringBuilder sb = currentRoom.getRoomAsString();
-		int start = player.getX()*2 + (2*currentRoom.getSizeX()+1)*player.getY();
-		sb.replace(start, start+2, Menu.SWORD + "" + Menu.MAN);
-		System.out.print(sb.toString());
+	private int getStartPos(int x, int y){
+		return x*2 + (2*currentRoom.getSizeX()+1)*y;
 	}
 }

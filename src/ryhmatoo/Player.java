@@ -1,9 +1,10 @@
 package ryhmatoo;
 
-public class Player implements Fighter {
+public class Player implements Fighter, Drawable {
 	private int x, y;
 	private int maxHealth, health;
 	private int xp, level;
+	private final char SWORD = 'i', MAN = '\u263A';
 	
 	public Player(int x, int y, int maxHealth) {
 		super();
@@ -13,10 +14,10 @@ public class Player implements Fighter {
 		health = maxHealth;
 	}
 	
-	public void move(World w, int dir){
+	public void move(Room r, int dir){
 		switch(dir){
 		case World.NORTH: {
-			if(w.isCellEmpty(getX(), getY()-1)){
+			if(r.isCellEmpty(getX(), getY()-1)){
 				setY(getY()-1);
 			} else {
 				System.out.println("You can't walk there.");
@@ -24,7 +25,7 @@ public class Player implements Fighter {
 			break;
 		}
 		case World.SOUTH: {
-			if(w.isCellEmpty(getX(), getY()+1)){
+			if(r.isCellEmpty(getX(), getY()+1)){
 				setY(getY()+1);
 			} else {
 				System.out.println("You can't walk there.");
@@ -32,7 +33,7 @@ public class Player implements Fighter {
 			break;
 		}
 		case World.WEST: {
-			if(w.isCellEmpty(getX()-1, getY())){
+			if(r.isCellEmpty(getX()-1, getY())){
 				setX(getX()-1);
 			} else {
 				System.out.println("You can't walk there.");
@@ -40,7 +41,7 @@ public class Player implements Fighter {
 			break;
 		}
 		case World.EAST: {
-			if(w.isCellEmpty(getX()+1, getY())){
+			if(r.isCellEmpty(getX()+1, getY())){
 				setX(getX()+1);
 			} else {
 				System.out.println("You can't walk there.");
@@ -64,6 +65,10 @@ public class Player implements Fighter {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	public String getImage(){
+		return SWORD + "" + MAN;
 	}
 
 	@Override

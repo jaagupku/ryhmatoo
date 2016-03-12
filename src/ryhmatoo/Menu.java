@@ -3,7 +3,7 @@ package ryhmatoo;
 import java.util.Scanner;
 
 public class Menu {
-	public static final char BLOCK = '\u2588', FLOOR = '\u2591', SWORD = 'i', MAN = '\u263A', KEY='k', DOOR = '\u00B6';
+	public static final char BLOCK = '\u2588', FLOOR = '\u2591', KEY='k', DOOR = '\u00B6';
 	private static Scanner sc = new Scanner(System.in);
 	
 	public static void displayWelcomeScreen() {

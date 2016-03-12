@@ -2,11 +2,13 @@ package ryhmatoo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Room {
-	private List<Monster> monsters;
+	private List<Monster> monsters = new ArrayList<Monster>();
+	private List<Item> items = new ArrayList<Item>();
 	private int entranceX, entranceY;
 	private Map map;
 	public static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3;
@@ -52,10 +54,31 @@ public class Room {
 			else if (command[0].equalsIgnoreCase("room_down")){
 				roomsAroundThis[DOWN] = Integer.parseInt(command[1]);
 			}
+			else if (command[0].equalsIgnoreCase("add_monster")){
+				String[] values = command[1].split(",");
+				monsters.add(new Monster(Integer.parseInt(values[0]), 
+										 Integer.parseInt(values[1]), 
+										 Integer.parseInt(values[2])));
+			}
 		}
 	}
 	
-	public StringBuilder getRoomAsString(){
+	public boolean isCellEmpty(int x, int y){
+		if(x < 0 || x >= getSizeX() || y < 0 || y >= getSizeY()){
+			return true;
+		}
+		if(getCell(x, y) == Map.WALL){
+			return false;
+		}
+		for(Monster m : monsters){
+			if(m.getX() == x && m.getY() == y){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public String getRoomAsString(Player player){
 		StringBuilder sb = new StringBuilder((getSizeY()+2) * getSizeX() * 1);
 		for(int y = 0; y < getSizeY(); y++) {
 			for(int x = 0; x < getSizeX(); x++) {
@@ -75,8 +98,18 @@ public class Room {
 			}
 			sb.append("\n");
 		}
-		
-		return sb;
+		List<Drawable> tempDrawList = new ArrayList<Drawable>(items);
+		tempDrawList.addAll(monsters);
+		tempDrawList.add(player);
+		for(Drawable d : tempDrawList){
+			int start = getStartPos(d.getX(), d.getY());
+			sb.replace(start, start+2, d.getImage());
+		}
+		return sb.toString();
+	}
+	
+	private int getStartPos(int x, int y){
+		return x*2 + (2*getSizeX()+1)*y;
 	}
 	
 	public int getRoomNext(int side){

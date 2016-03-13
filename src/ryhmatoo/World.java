@@ -24,20 +24,12 @@ public class World {
 	public void movePlayer(int dir) {
 		player.move(currentRoom, dir);
 		int nextRoom = -1;
-		if(player.getX() < 0){
-			nextRoom = currentRoom.getRoomNext(Room.LEFT);
-		}
-		else if(player.getX() >= currentRoom.getSizeX()){
-			nextRoom = currentRoom.getRoomNext(Room.RIGHT);
-		}
-		else if(player.getY() < 0){
-			nextRoom = currentRoom.getRoomNext(Room.UP);
-		}
-		else if(player.getY() >= currentRoom.getSizeY()){
-			nextRoom = currentRoom.getRoomNext(Room.DOWN);
+		if(player.getX() < 0 || player.getX() >= currentRoom.getSizeX() ||
+		   player.getY() < 0 || player.getY() >= currentRoom.getSizeY()) {
+			nextRoom = currentRoom.getNextRoom(player.getX(), player.getY(), rooms);
 		}
 		if(nextRoom != -1){
-			changeRooms(nextRoom-1);
+			changeRooms(nextRoom);
 		}
 	}
 	

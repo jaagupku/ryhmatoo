@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Menu {
 	public static final char BLOCK = '\u2588', FLOOR = '\u2591', KEY='k', DOOR = '\u00B6';
 	private static Scanner sc = new Scanner(System.in);
+	private static boolean autoLook = false;
 	
 	public static void displayWelcomeScreen() {
 		String welcome = "This is filler text for welcome screen.";
@@ -54,12 +55,16 @@ public class Menu {
 			} else {
 				if(command[1].equalsIgnoreCase("north")) {
 					Game.world.movePlayer(World.NORTH);
+					if(autoLook) Game.world.printWorld();
 				} else if(command[1].equalsIgnoreCase("south")) {
 					Game.world.movePlayer(World.SOUTH);
+					if(autoLook) Game.world.printWorld();
 				} else if(command[1].equalsIgnoreCase("west")) {
 					Game.world.movePlayer(World.WEST);
+					if(autoLook) Game.world.printWorld();
 				} else if(command[1].equalsIgnoreCase("east")) {
 					Game.world.movePlayer(World.EAST);
+					if(autoLook) Game.world.printWorld();
 				} else {
 					System.out.println("Could you just say \"move <north|south|west|east>\"");
 				}
@@ -67,9 +72,15 @@ public class Menu {
 		} else if(command[0].equalsIgnoreCase("take")){	
 			System.out.println("TODO"); //TODO
 		} else if(command[0].equalsIgnoreCase("look")) {
-			Game.world.printWorld();
+			if(command.length != 2){
+				Game.world.printWorld();
+			} else if(command[1].equalsIgnoreCase("auto")){
+				autoLook = !autoLook;
+				System.out.println("Auto look: " + autoLook);
+			}
 		} else if(command[0].equalsIgnoreCase("help")) {
 			System.out.println("Commands:\nmove <north|south|west|east> - to move around.\nlook - shows map\n"
+					+ "look auto - if on then prints world out after moving\n"
 					+ "take - pickes up an item below player.\nexit - exits game mode.");
 		} else {
 			System.out.println("What was that? I don't know that word...");

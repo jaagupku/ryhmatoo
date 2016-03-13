@@ -9,10 +9,9 @@ import java.util.Scanner;
 public class Room {
 	private List<Monster> monsters = new ArrayList<Monster>();
 	private List<Item> items = new ArrayList<Item>();
+	private List<Connection> connections = new ArrayList<Connection>();
 	private int entranceX, entranceY;
 	private Map map;
-	public static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3;
-	private Integer[] roomsAroundThis = new Integer[4];
 	
 	public Room(File file){
 		StringBuilder sb = new StringBuilder();
@@ -35,24 +34,19 @@ public class Room {
 				map = new Map(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
 			}
 			else if (command[0].equalsIgnoreCase("map_tiles")){
-				map.loadMapFromCharArray(command[1].toCharArray());
+				StringBuilder sb1 = new StringBuilder(command[1]);
+				while(sb1.indexOf("$") != -1){
+					int startPos = sb1.indexOf("$");
+					int endPos = sb1.indexOf("$", startPos+1);
+					connections.add(new Connection(sb1.substring(startPos+1, endPos), startPos));
+					sb1.replace(startPos, endPos+1, "0");
+				}
+				map.loadMapFromCharArray(sb1.toString().toCharArray());
 			}
 			else if (command[0].equalsIgnoreCase("player_spawn")){
 				String[] values = command[1].split(",");
 				entranceX = Integer.parseInt(values[0]);
 				entranceY = Integer.parseInt(values[1]);
-			}
-			else if (command[0].equalsIgnoreCase("room_left")){
-				roomsAroundThis[LEFT] = Integer.parseInt(command[1]);
-			}
-			else if (command[0].equalsIgnoreCase("room_right")){
-				roomsAroundThis[RIGHT] = Integer.parseInt(command[1]);
-			}
-			else if (command[0].equalsIgnoreCase("room_up")){
-				roomsAroundThis[UP] = Integer.parseInt(command[1]);
-			}
-			else if (command[0].equalsIgnoreCase("room_down")){
-				roomsAroundThis[DOWN] = Integer.parseInt(command[1]);
 			}
 			else if (command[0].equalsIgnoreCase("add_monster")){
 				String[] values = command[1].split(",");
@@ -112,9 +106,32 @@ public class Room {
 		return x*2 + (2*getSizeX()+1)*y;
 	}
 	
-	public int getRoomNext(int side){
-		if(roomsAroundThis[side] == null) return -1;
-		return roomsAroundThis[side];
+	public int getNextRoom(int x, int y, List<Room> others){
+		String connectionName = null;
+		for(Room r : others){
+			for(Connection c : r.getConnections()){
+				if(c.coordinatesEqual(x, y)){
+					connectionName = c.getName();
+					break;
+				}
+			}
+			if(connectionName != null) break;
+		}
+		for(Room r : others){
+			if(r == this){
+				continue;
+			}
+			for(Connection c : r.getConnections()){
+				if(c.getName().equals(connectionName)){
+					return others.indexOf(r);
+				}
+			}
+		}
+		return -1;
+	}
+	
+	public List<Connection> getConnections(){
+		return connections;
 	}
 	
 	public int getCell(int x, int y){
@@ -147,5 +164,46 @@ public class Room {
 		if(entranceY < 0) this.entranceY = 0;
 		else if(entranceY >= getSizeY()) this.entranceY = getSizeY()-1;
 		else this.entranceY = entranceY;
+	}
+	
+	
+	private class Connection{
+		private String name;
+		private int x, y;
+		
+		public Connection(String name, int position) {
+			super();
+			this.name = name;
+			x = position%getSizeX();
+			y = (position - x)/getSizeX();
+			if(x == 0){
+				x--;
+			}
+			else if(x == getSizeX()-1){
+				x++;
+			}
+			else if(y == 0){
+				y--;
+			}
+			else if(y == getSizeY()-1){
+				y++;
+			}
+		}
+		
+		public boolean coordinatesEqual(int x, int y){
+			return this.x == x && this.y == y;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public int getX() {
+			return x;
+		}
+
+		public int getY() {
+			return y;
+		}
 	}
 }

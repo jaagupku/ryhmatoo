@@ -1,9 +1,11 @@
+//ruumi nimetamine:
+//roomID.txt
 // map_size peab olema enne map_tiles.
 // kommentaar peab olema eraldi real, st. ei saa olla mingi rea lõpus.
 map_size=12,10;
 map_tiles=
-111111011111
-100000000000
+111111$p2$11111
+10000000000$p1$
 101111111001
 101100001001
 101001101101
@@ -14,8 +16,6 @@ map_tiles=
 111111111111
 ;
 player_spawn=9,1;
-room_right=2;
-room_up=3;
 //          x,y,monster_id
 add_monster=1,1,0;
 add_monster=4,3,0;

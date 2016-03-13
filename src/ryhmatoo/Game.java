@@ -14,12 +14,8 @@
  * et saaks kanda võtmeid seal ja muid asju, nt vb health potionid, relvad etc.
  * 
  * 
- * Add support for loading monsters from file.
- * Solution change World --> Room
- * Make new World. World contains all Rooms and connections between them. World has a Player.
+ * Make new World. World contains all Rooms and connections between them. 
  * Switching between rooms needs polishing.
- * 
- * Printing world needs improvements to print objects from List<Monsters> and List<Item>
  * 
  * Maybe interface for Item
  * and make Key implement Item

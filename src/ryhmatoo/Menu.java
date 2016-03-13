@@ -11,8 +11,19 @@ import java.util.Scanner;
 
 public class Menu {
 	public static final char BLOCK = '\u2588', FLOOR = '\u2591', KEY='k', DOOR = '\u00B6';
+	public static final int BLACK = 0, RED = 1, GREEN = 2, YELLOW = 3, BLUE = 4, PURPLE = 5, CYAN = 6, WHITE = 7;
+	private static final String ANSI_RESET = "\u001B[0m";
+	private static final String ANSI_BLACK = "\u001B[30m";
+	private static final String ANSI_RED = "\u001B[31m";
+	private static final String ANSI_GREEN = "\u001B[32m";
+	private static final String ANSI_YELLOW = "\u001B[33m";
+	private static final String ANSI_BLUE = "\u001B[34m";
+	private static final String ANSI_PURPLE = "\u001B[35m";
+	private static final String ANSI_CYAN = "\u001B[36m";
+	private static final String ANSI_WHITE = "\u001B[37m";
 	private static Scanner sc = new Scanner(System.in);
 	private static boolean autoLook = false;
+	public static boolean textColored = true;
 	
 	public static void displayWelcomeScreen() {
 		List<String> welcome = new ArrayList<String>();
@@ -22,7 +33,7 @@ public class Menu {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		for(String s : welcome) System.out.println(s);
+		for(String s : welcome) System.out.println(colorText(s, RED));
 		System.out.println();
 	}
 	
@@ -32,11 +43,14 @@ public class Menu {
 		while(true){
 			System.out.println();
 			System.out.println("\t\"1\" to start the game.");
-			System.out.println("\t\"2\" to exit the game.");
+			System.out.println("\t\"2\" to toggle text colors.");
+			System.out.println("\t\"3\" to exit the game.");
 			input = sc.nextLine();
 			if(input.equalsIgnoreCase("1")) {
 				game();
 			} else if(input.equalsIgnoreCase("2")) {
+				textColored = !textColored;
+			} else if(input.equalsIgnoreCase("3")) {
 				break;
 			} else {
 				System.out.println("That wasn't an option. Please try again!");
@@ -115,5 +129,39 @@ public class Menu {
 		} else {
 			System.out.println("What was that? I don't know that word...");
 		}
+	}
+	
+	public static String colorText(String text, int color){
+		if(!textColored) return text;
+		StringBuilder sb = new StringBuilder();
+		switch(color){
+		case BLACK:
+			sb.append(ANSI_BLACK);
+			break;
+		case RED:
+			sb.append(ANSI_RED);
+			break;
+		case GREEN:
+			sb.append(ANSI_GREEN);
+			break;
+		case YELLOW:
+			sb.append(ANSI_YELLOW);
+			break;
+		case BLUE:
+			sb.append(ANSI_BLUE);
+			break;
+		case PURPLE:
+			sb.append(ANSI_PURPLE);
+			break;
+		case CYAN:
+			sb.append(ANSI_CYAN);
+			break;
+		case WHITE:
+			sb.append(ANSI_WHITE);
+			break;
+		}
+		sb.append(text);
+		sb.append(ANSI_RESET);
+		return sb.toString();
 	}
 }

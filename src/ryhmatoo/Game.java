@@ -26,7 +26,7 @@ public class Game {
 	static World world;
 
 	public static void main(String[] args) {
-		world = new World(3);
+		world = new World();
 		Menu.displayWelcomeScreen();
 		Menu.mainMenu();
 		

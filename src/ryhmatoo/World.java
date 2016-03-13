@@ -1,10 +1,8 @@
 package ryhmatoo;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class World {
 	public static final int NORTH = 0, SOUTH = 1, WEST = 2, EAST = 3; // Directions
@@ -12,10 +10,14 @@ public class World {
 	private List<Room> rooms = new ArrayList<Room>();
 	private Room currentRoom;
 	
-	public World(int numberOfRooms) {
-		for(int i=1; i<=numberOfRooms; i++) {
-				File f = new File("data\\room" + i + ".txt");
-				rooms.add(new Room(f));
+	public World() {
+		int counter = 0;
+		File f;
+		while(true) {
+			f = new File("data\\room" + counter + ".txt");
+			if(!f.exists()) break;
+			rooms.add(new Room(f));
+			counter++;
 		}
 		currentRoom = rooms.get(0);
 		player = new Player(currentRoom.getEntranceX(), currentRoom.getEntranceY(), 100);
@@ -32,15 +34,7 @@ public class World {
 		}
 	}
 	
-	private void changeRooms(Room newRoom){
-		
-	}
-	
 	public void printWorld() {
 		System.out.print(currentRoom.getRoomAsString(player));
-	}
-	
-	private int getStartPos(int x, int y){
-		return x*2 + (2*currentRoom.getSizeX()+1)*y;
 	}
 }

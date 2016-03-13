@@ -129,7 +129,7 @@ public class Room {
 		return null;
 	}
 	
-	public List<Connection> getConnections(){
+	private List<Connection> getConnections(){
 		return connections;
 	}
 	
@@ -153,13 +153,13 @@ public class Room {
 		return entranceY;
 	}
 	
-	public void setEntranceX(int entranceX) {
+	private void setEntranceX(int entranceX) {
 		if(entranceX < 0) this.entranceX = 0;
 		else if(entranceX >= getSizeX()) this.entranceX = getSizeX()-1;
 		else this.entranceX = entranceX;
 	}
 
-	public void setEntranceY(int entranceY) {
+	private void setEntranceY(int entranceY) {
 		if(entranceY < 0) this.entranceY = 0;
 		else if(entranceY >= getSizeY()) this.entranceY = getSizeY()-1;
 		else this.entranceY = entranceY;

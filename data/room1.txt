@@ -1,33 +1,11 @@
-//ruumi nimetamine:
-//roomID.txt
-// map_size peab olema enne map_tiles.
-// kommentaar peab olema eraldi real, st. ei saa olla mingi rea lõpus.
-map_size=12,10;
-
-// Kahe ruumi ühendamise süntaks:
-// seal kus kaks ruumi on ühendatud $ühenduse nimi$
-// see tuleb kirjutada mõlemasse ruumi. 
-// Näide:
-// 11$ruum$11	111111
-// 10001		$ruum$00001
-// 11111		111111
-// Sel juhul ühendatakse need kaks ruumi.
-// Ühenduse nimed peavad olema unikaalsed.
-
+map_size=8,8;
 map_tiles=
-111111$p2$11111
-10000000000$p1$
-10111111100$p3$
-101100001001
-101001101101
-100011000101
-111000010001
-100010101011
-110101010101
-111111111111
+11111111
+10000001
+10011001
+10011001
+10111101
+$p1$0100101
+$p3$0000001
+11111111
 ;
-player_spawn=9,1;
-//          x,y,monster_id
-add_monster=1,1,0;
-add_monster=4,3,0;
-add_monster=9,5,0;

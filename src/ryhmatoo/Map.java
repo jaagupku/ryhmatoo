@@ -1,10 +1,6 @@
 package ryhmatoo;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Map {
 	public static final int WALL = 1, EMPTY = 0, DOOR = 2; // Map tiles
@@ -17,29 +13,6 @@ public class Map {
 		this.sizeY = (sizeY > 4 ? sizeY : 4);
 		this.cells = new Integer[this.sizeY][this.sizeX];
 		fillWorldRandom();
-	}
-	
-	public Map(File file){
-		Scanner input = null;
-		try {
-			input = new Scanner(file);
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found.");
-			e.printStackTrace();
-		}
-		ArrayList<Integer[]> data = new ArrayList<Integer[]>();
-		while(input.hasNextLine()){
-			char[] ridaChar = input.nextLine().toCharArray();
-			Integer[] ridaInt = new Integer[ridaChar.length];
-			for(int i=0;i<ridaChar.length;i++){
-				ridaInt[i] = Character.getNumericValue(ridaChar[i]);
-			}
-			data.add(ridaInt);
-		}
-		input.close();
-		sizeY = data.size();
-		sizeX = data.get(0).length;
-		cells = data.toArray(new Integer[sizeY][sizeX]);
 	}
 	
 	public void changeMapTile(int x, int y, int tile){

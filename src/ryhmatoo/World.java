@@ -23,22 +23,17 @@ public class World {
 	
 	public void movePlayer(int dir) {
 		player.move(currentRoom, dir);
-		int nextRoom = -1;
 		if(player.getX() < 0 || player.getX() >= currentRoom.getSizeX() ||
 		   player.getY() < 0 || player.getY() >= currentRoom.getSizeY()) {
-			nextRoom = currentRoom.getNextRoom(player.getX(), player.getY(), rooms);
-		}
-		if(nextRoom != -1){
-			changeRooms(nextRoom);
+			Room nextRoom = currentRoom.getNextRoom(player.getX(), player.getY(), rooms);
+			if(nextRoom != null) currentRoom = nextRoom;
+			player.setX(currentRoom.getEntranceX());
+			player.setY(currentRoom.getEntranceY());
 		}
 	}
 	
-	private void changeRooms(int newRoom){
-		currentRoom.setEntranceX(player.getX());
-		currentRoom.setEntranceY(player.getY());
-		currentRoom = rooms.get(newRoom);
-		player.setX(currentRoom.getEntranceX());
-		player.setY(currentRoom.getEntranceY());
+	private void changeRooms(Room newRoom){
+		
 	}
 	
 	public void printWorld() {

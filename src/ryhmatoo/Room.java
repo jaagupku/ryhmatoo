@@ -106,16 +106,13 @@ public class Room {
 		return x*2 + (2*getSizeX()+1)*y;
 	}
 	
-	public int getNextRoom(int x, int y, List<Room> others){
+	public Room getNextRoom(int x, int y, List<Room> others){
 		String connectionName = null;
-		for(Room r : others){
-			for(Connection c : r.getConnections()){
-				if(c.coordinatesEqual(x, y)){
-					connectionName = c.getName();
-					break;
-				}
+		for(Connection c : getConnections()){
+			if(c.coordinatesEqual(x, y)){
+				connectionName = c.getName();
+				break;
 			}
-			if(connectionName != null) break;
 		}
 		for(Room r : others){
 			if(r == this){
@@ -123,11 +120,13 @@ public class Room {
 			}
 			for(Connection c : r.getConnections()){
 				if(c.getName().equals(connectionName)){
-					return others.indexOf(r);
+					r.setEntranceX(c.getX());
+					r.setEntranceY(c.getY());
+					return r;
 				}
 			}
 		}
-		return -1;
+		return null;
 	}
 	
 	public List<Connection> getConnections(){
@@ -153,7 +152,7 @@ public class Room {
 	public int getEntranceY() {
 		return entranceY;
 	}
-
+	
 	public void setEntranceX(int entranceX) {
 		if(entranceX < 0) this.entranceX = 0;
 		else if(entranceX >= getSizeX()) this.entranceX = getSizeX()-1;
@@ -165,7 +164,6 @@ public class Room {
 		else if(entranceY >= getSizeY()) this.entranceY = getSizeY()-1;
 		else this.entranceY = entranceY;
 	}
-	
 	
 	private class Connection{
 		private String name;
@@ -199,10 +197,22 @@ public class Room {
 		}
 
 		public int getX() {
+			if(x == -1){
+				return x+1;
+			}
+			else if(x == getSizeX()){
+				return x-1;
+			}
 			return x;
 		}
 
 		public int getY() {
+			if(y == -1){
+				return y+1;
+			}
+			else if(y == getSizeY()){
+				return y-1;
+			}
 			return y;
 		}
 	}

@@ -23,6 +23,10 @@ public class World {
 		player = new Player(currentRoom.getEntranceX(), currentRoom.getEntranceY(), 100);
 	}
 	
+	public void playerAttack(int dir){
+		
+	}
+	
 	public void movePlayer(int dir) {
 		player.move(currentRoom, dir);
 		if(player.getX() < 0 || player.getX() >= currentRoom.getSizeX() ||

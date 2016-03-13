@@ -73,7 +73,7 @@ public class Room {
 	}
 	
 	public String getRoomAsString(Player player){
-		StringBuilder sb = new StringBuilder((getSizeY()+2) * getSizeX() * 1);
+		StringBuilder sb = new StringBuilder((getSizeX()*2+1)*getSizeY());
 		for(int y = 0; y < getSizeY(); y++) {
 			for(int x = 0; x < getSizeX(); x++) {
 				int cell = getCell(x, y);

@@ -27,7 +27,6 @@ public class Game {
 
 	public static void main(String[] args) {
 		world = new World();
-		Menu.displayWelcomeScreen();
 		Menu.mainMenu();
 		
 	}

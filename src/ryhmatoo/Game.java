@@ -13,10 +13,6 @@
  * mängijal privaatne isendiväli Inventory inventory ?
  * et saaks kanda võtmeid seal ja muid asju, nt vb health potionid, relvad etc.
  * 
- * 
- * Make new World. World contains all Rooms and connections between them. 
- * Switching between rooms needs polishing.
- * 
  * Maybe interface for Item
  * and make Key implement Item
  * 

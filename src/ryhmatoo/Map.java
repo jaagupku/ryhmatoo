@@ -4,14 +4,14 @@ import java.util.Random;
 
 public class Map {
 	public static final int WALL = 1, EMPTY = 0, DOOR = 2; // Map tiles
-	private Integer[][] cells;
+	private int[][] cells;
 	private int sizeX, sizeY;
 	private Random rng = new Random();
 	
 	public Map(int sizeX, int sizeY){
-		this.sizeX = (sizeX > 4 ? sizeX : 4);
-		this.sizeY = (sizeY > 4 ? sizeY : 4);
-		this.cells = new Integer[this.sizeY][this.sizeX];
+		this.sizeX = (sizeX > 3 ? sizeX : 3);
+		this.sizeY = (sizeY > 3 ? sizeY : 3);
+		this.cells = new int[this.sizeY][this.sizeX];
 		fillWorldRandom();
 	}
 	
@@ -41,7 +41,7 @@ public class Map {
 	}
 	
 	public int getCell(int x, int y){
-		return (cells[y][x] == null ? -1 : cells[y][x]);
+		return cells[y][x];
 	}
 
 	public int getSizeX() {

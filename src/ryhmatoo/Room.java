@@ -23,32 +23,46 @@ public class Room {
 		}
 		while(input.hasNextLine()){
 			String line = input.nextLine();
+			// Loeb kogu faili ühte pikka sõnesse.
+			// Kui rida failis ei alga // siis see rida läheb pikka sõnesse.
 			if(!line.startsWith("//")) sb.append(line);
 		}
 		input.close();
+		// Teeb pikast stringist käskude kaupa sõne massiivi.
 		String[] mapLines = sb.toString().split(";");
 		for(String st : mapLines){
+			// Jagab käsu kaheks. command[0] on käsu nimi ja command[1] selle väärtus
 			String[] command = st.split("=");
+			// kontrollib käsud läbi
 			if(command[0].equalsIgnoreCase("map_size")){
-				String[] values = command[1].split(",");
+				// Kaardi suurusel on kaks väärtus, x ja y
+				String[] values = command[1].split(","); // eraldab need
+				// Loob uue kaardi vajalike suurustega
 				map = new Map(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
 			}
 			else if (command[0].equalsIgnoreCase("map_tiles")){
+				// map_tiles täidab kaardi vastavate väärtustega
 				StringBuilder sb1 = new StringBuilder(command[1]);
-				while(sb1.indexOf("$") != -1){
+				while(sb1.indexOf("$") != -1){ // loob ruumide vahel ühendused.
 					int startPos = sb1.indexOf("$");
 					int endPos = sb1.indexOf("$", startPos+1);
+					// kahe $ vahel on ühenduse nimi. Luuakse uus ühendus.
 					connections.add(new Connection(sb1.substring(startPos+1, endPos), startPos));
+					// $nimi$ asendatakse tühja rakuga.
 					sb1.replace(startPos, endPos+1, "0");
 				}
 				map.loadMapFromCharArray(sb1.toString().toCharArray());
 			}
 			else if (command[0].equalsIgnoreCase("player_spawn")){
+				// player_spawn on vajalik ainult esimesel ruumil, ehk room0.txt
+				// teistel vahet ei ole.
 				String[] values = command[1].split(",");
 				entranceX = Integer.parseInt(values[0]);
 				entranceY = Integer.parseInt(values[1]);
 			}
 			else if (command[0].equalsIgnoreCase("add_monster")){
+				// add_monster lisab koletisi ruumi.
+				// add_monster=x,y,koletiseID;
 				String[] values = command[1].split(",");
 				monsters.add(new Monster(Integer.parseInt(values[0]), 
 										 Integer.parseInt(values[1]), 
@@ -59,11 +73,18 @@ public class Room {
 	
 	public boolean isCellEmpty(int x, int y){
 		if(x < 0 || x >= getSizeX() || y < 0 || y >= getSizeY()){
-			return true;
+			// kaardist väljaspool olev rakk on tühi, siis kui see ühendab mingit teist ruumi
+			for(Connection c : connections){
+				if(c.coordinatesEquals(x, y)){
+					return true;
+				}
+			}// kui ei ühenda, siis pole tühi
+			return false;
 		}
 		if(getCell(x, y) == Map.WALL){
 			return false;
 		}
+		// koletised ka alluvad tõrjutusprintsiibile :D
 		for(Monster m : monsters){
 			if(m.getX() == x && m.getY() == y){
 				return false;
@@ -73,7 +94,12 @@ public class Room {
 	}
 	
 	public String getRoomAsString(Player player){
+		// Tagastab ruumi sõnena, eesmärgiga, et välja printida.
+		// Luuakse StringBuilder, mahuga (ruumiSuurusX*2+1)*ruumiSuurusY()
+		// ruumi suurus korda kaks, sest ühe tähemärgi_laius = tähemärgi_pikkus/2 konsooli fondis.
+		// ja ruumiSuurusX*2+1 see +1 seal on reavahetuse pärast.
 		StringBuilder sb = new StringBuilder((getSizeX()*2+1)*getSizeY());
+		// for tsükkel täidab ruumi kaardis saadud infoga.
 		for(int y = 0; y < getSizeY(); y++) {
 			for(int x = 0; x < getSizeX(); x++) {
 				int cell = getCell(x, y);
@@ -92,11 +118,17 @@ public class Room {
 			}
 			sb.append("\n");
 		}
-		List<Drawable> tempDrawList = new ArrayList<Drawable>(items);
-		tempDrawList.addAll(monsters);
-		tempDrawList.add(player);
-		for(Drawable d : tempDrawList){
+		// Luuakse list List<Drawable> drawList, sinna lisatakse kõik objektid mis tuleb välja printida
+		// kaardi peale. Kui ühel rakul juhtub olema kaks joonistatavat asja, siis välja jääb see, mis
+		// lisati viimasena.
+		List<Drawable> drawList = new ArrayList<Drawable>(items);
+		drawList.addAll(monsters);
+		drawList.add(player);
+		for(Drawable d : drawList){
+			// getStartPos võtab argumentideks joonistatava x ja y koordiaadid ja tagastab selle raku
+			// asukoha sõnes.
 			int start = getStartPos(d.getX(), d.getY());
+			// asendatakse seal olev rakk joonistatava "pildiga".
 			sb.replace(start, start+2, d.getImage());
 		}
 		return sb.toString();
@@ -107,26 +139,27 @@ public class Room {
 	}
 	
 	public Room getNextRoom(int x, int y, List<Room> others){
-		String connectionName = null;
+		// getNextRoom otsib üles ühenduse ja siis tagastab teise ruumi, kus on ka see sama ühenduse nimi.
+		Connection connection = null;
 		for(Connection c : getConnections()){
-			if(c.coordinatesEqual(x, y)){
-				connectionName = c.getName();
+			if(c.coordinatesEquals(x, y)){
+				connection = c; // Leidis ühenduse sellest ruumist
 				break;
 			}
 		}
 		for(Room r : others){
 			if(r == this){
-				continue;
+				continue; // otsime teistest ruumidest.
 			}
-			for(Connection c : r.getConnections()){
-				if(c.getName().equals(connectionName)){
-					r.setEntranceX(c.getX());
-					r.setEntranceY(c.getY());
-					return r;
-				}
+			if(r.getConnections().contains(connection)){ // Kui selles teises ruumis on otsitav ühendus
+				int newIndex = r.getConnections().indexOf(connection);
+				// Määrame teises ruumis sissepääsu koordinaatideks selle ühenduse koordinaadid.
+				r.setEntranceX(r.getConnections().get(newIndex).getX());
+				r.setEntranceY(r.getConnections().get(newIndex).getY());
+				return r; // Tagastame uue ruumi.
 			}
 		}
-		return null;
+		return null; // Kui ruumi ei leidnud siis tagastame nulli.
 	}
 	
 	private List<Connection> getConnections(){
@@ -166,14 +199,17 @@ public class Room {
 	}
 	
 	private class Connection{
+		// Ühendusel on nimi, ja koordinaadid
 		private String name;
 		private int x, y;
 		
 		public Connection(String name, int position) {
 			super();
 			this.name = name;
+			// Leiame koordinaadid x ja y, sest position on ühenduse asukoht sisseloetud sõnes.
 			x = position%getSizeX();
 			y = (position - x)/getSizeX();
+			// Kui ühendus on kaardi ääres, siis liigutame tema kaardist väljapoole.
 			if(x == 0){
 				x--;
 			}
@@ -188,8 +224,20 @@ public class Room {
 			}
 		}
 		
-		public boolean coordinatesEqual(int x, int y){
+		public boolean coordinatesEquals(int x, int y){
+			// Kui koordinaaadid on ühenduse omaga võrdsed
 			return this.x == x && this.y == y;
+		}
+		
+		@Override
+		public boolean equals(Object o){
+			if(o instanceof Connection) {
+				return ((Connection) o).getName().equals(getName());
+			}
+			else {
+				return false;
+			}
+			
 		}
 
 		public String getName() {
@@ -197,6 +245,7 @@ public class Room {
 		}
 
 		public int getX() {
+			// Tagastab koordinaadid, mis on kaardi sees.
 			if(x == -1){
 				return x+1;
 			}
@@ -207,6 +256,7 @@ public class Room {
 		}
 
 		public int getY() {
+			// Tagastab koordinaadid, mis on kaardi sees.
 			if(y == -1){
 				return y+1;
 			}

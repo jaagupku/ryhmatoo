@@ -13,6 +13,7 @@ public class World {
 	public World() {
 		int counter = 0;
 		File f;
+		// loob nii palju ruume, kui on kaustas "data" faile nimega "room<number>.txt"
 		while(true) {
 			f = new File("data\\room" + counter + ".txt");
 			if(!f.exists()) break;
@@ -28,9 +29,12 @@ public class World {
 	}
 	
 	public void movePlayer(int dir) {
+		// liigutab mängijat
 		player.move(currentRoom, dir);
 		if(player.getX() < 0 || player.getX() >= currentRoom.getSizeX() ||
 		   player.getY() < 0 || player.getY() >= currentRoom.getSizeY()) {
+			// Kui mängija liikus kaardist välja, siis see tähendab, et ta peab minema uute ruumi
+			// Leiame selle ja vahetame ruumid ära.
 			Room nextRoom = currentRoom.getNextRoom(player.getX(), player.getY(), rooms);
 			if(nextRoom != null) currentRoom = nextRoom;
 			player.setX(currentRoom.getEntranceX());

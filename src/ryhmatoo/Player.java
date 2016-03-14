@@ -15,6 +15,8 @@ public class Player implements Fighter, Drawable {
 	}
 	
 	public void move(Room r, int dir){
+		// switch kontrollib kas liigutavas suunas on ruumis r olev rakk tühi või mitte
+		// kui on siis muudab mängija koordinaate, kui ei ole siis ütleb kasutajale.
 		switch(dir){
 		case World.NORTH: {
 			if(r.isCellEmpty(getX(), getY()-1)){

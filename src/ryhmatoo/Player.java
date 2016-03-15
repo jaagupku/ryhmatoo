@@ -11,42 +11,24 @@ public class Player extends Fighter implements Drawable {
 		this.y = y;
 	}
 	
-	public void move(Room r, int dir){
-		// switch kontrollib kas liigutavas suunas on ruumis r olev rakk tühi või mitte
-		// kui on siis muudab mängija koordinaate, kui ei ole siis ütleb kasutajale.
+	public void move(int dir){
 		switch(dir){
-		case World.NORTH: {
-			if(r.isCellEmpty(getX(), getY()-1)){
+			case World.NORTH: {
 				setY(getY()-1);
-			} else {
-				System.out.println("You can't walk there.");
+				break;
 			}
-			break;
-		}
-		case World.SOUTH: {
-			if(r.isCellEmpty(getX(), getY()+1)){
+			case World.SOUTH: {
 				setY(getY()+1);
-			} else {
-				System.out.println("You can't walk there.");
+				break;
 			}
-			break;
-		}
-		case World.WEST: {
-			if(r.isCellEmpty(getX()-1, getY())){
+			case World.WEST: {
 				setX(getX()-1);
-			} else {
-				System.out.println("You can't walk there.");
+				break;
 			}
-			break;
-		}
-		case World.EAST: {
-			if(r.isCellEmpty(getX()+1, getY())){
+			case World.EAST: {
 				setX(getX()+1);
-			} else {
-				System.out.println("You can't walk there.");
+				break;
 			}
-			break;
-		}
 		}
 	}
 

@@ -19,6 +19,27 @@ public class Monster extends Fighter implements Drawable{
 		
 	}
 	
+	public void move(int dir){
+		switch(dir){
+			case World.NORTH: {
+				setY(getY()-1);
+				break;
+			}
+			case World.SOUTH: {
+				setY(getY()+1);
+				break;
+			}
+			case World.WEST: {
+				setX(getX()-1);
+				break;
+			}
+			case World.EAST: {
+				setX(getX()+1);
+				break;
+			}
+		}
+	}
+	
 	public String getImage(){
 		return image;
 	}
@@ -29,5 +50,13 @@ public class Monster extends Fighter implements Drawable{
 	
 	public int getY() {
 		return y;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 }

@@ -58,12 +58,16 @@ public class World {
 	}
 	
 	public void monsterTurn(){
-		currentRoom.updateMonsters();
+		currentRoom.updateMonsters(player);
 	}
 	
 	public void movePlayer(int dir) {
 		// liigutab mängijat
-		player.move(currentRoom, dir);
+		if(currentRoom.getFreeDirections(player.getX(), player.getY()).contains(dir)){
+			player.move(dir);
+		} else {
+			System.out.println("You can't walk there.");
+		}
 		if(player.getX() < 0 || player.getX() >= currentRoom.getSizeX() ||
 		   player.getY() < 0 || player.getY() >= currentRoom.getSizeY()) {
 			// Kui mängija liikus kaardist välja, siis see tähendab, et ta peab minema uute ruumi

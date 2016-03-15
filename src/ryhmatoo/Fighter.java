@@ -21,16 +21,17 @@ public class Fighter {
 		this.agility = agility;
 	}
 	
-	public void attackOther(Fighter o){
+	public int attackOther(Fighter o){
 		int dmg = rng.nextInt(attackPower);
 		if(rng.nextInt(attackAccuracy) > o.getAgility()){
 			System.out.println(getName() + " attacks " + o.getName());
 			o.defendFromAttack(dmg);
+			return dmg;
 			
 		} else {
 			System.out.println(o.getName() + " dodged the attack from " + getName() + ".");
+			return 0;
 		}
-		
 	}
 	
 	public void defendFromAttack(int dmg){
@@ -55,6 +56,15 @@ public class Fighter {
 		health = this.health + health > maxHealth ? maxHealth : this.health + health;
 	}
 	
+	protected void levelUp(){
+		maxHealth += 10;
+		health += 10;
+		attackPower += 2;
+		attackAccuracy += 1;
+		defense += 1;
+		agility = defense % 2 == 0 ? agility+1 : agility;
+	}
+	
 	public int getDefense(){
 		return defense;
 	}
@@ -69,5 +79,17 @@ public class Fighter {
 	
 	public int getHealth(){
 		return health;
+	}
+
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public int getAttackPower() {
+		return attackPower;
+	}
+
+	public int getAttackAccuracy() {
+		return attackAccuracy;
 	}
 }

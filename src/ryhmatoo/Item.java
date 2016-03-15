@@ -23,20 +23,23 @@ public class Item  implements Drawable {
 		return taken;
 	}
 	
-	public String getImage(){
-		return img;
+	public String getName() {
+		return name;
 	}
 
+	@Override
 	public int getX() {
 		return x;
 	}
 
+	@Override
 	public int getY() {
 		return y;
 	}
 
-	public String getName() {
-		return name;
+	@Override
+	public String getImage() {
+		return img;
 	}
 	
 }

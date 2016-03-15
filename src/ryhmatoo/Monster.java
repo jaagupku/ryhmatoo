@@ -7,8 +7,8 @@ public class Monster extends Fighter implements Drawable{
 	private int maxHealth, health;
 	private String image;
 	private static final String[][] monsterNames = {{"TestMonster1", "T1"}, {"TestMonster2", "T2"}};
-	private static int monsterStats[][] = {{14, 10, 5, 3, 1},
-										   {25, 15, 7, 4, 2}};
+	private static int monsterStats[][] = {{140, 7, 5, 3, 1},
+										   {25, 11, 7, 4, 2}};
 	
 	public Monster(int x, int y, int id) {
 		super(monsterNames[id][0], monsterStats[id][0], monsterStats[id][1],
@@ -40,14 +40,17 @@ public class Monster extends Fighter implements Drawable{
 		}
 	}
 	
+	@Override
 	public String getImage(){
 		return image;
 	}
 	
+	@Override
 	public int getX() {
 		return x;
 	}
 	
+	@Override
 	public int getY() {
 		return y;
 	}

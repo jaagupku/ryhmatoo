@@ -51,7 +51,7 @@ public class World {
 		}
 		Monster m = currentRoom.getMonsterAt(x, y);
 		if(m != null){
-			player.attackOther(m);
+			player.addXp(player.attackOther(m));
 		} else {
 			System.out.println("You swing your sword in empty air.\nIt was pointless.");
 		}
@@ -81,5 +81,9 @@ public class World {
 	
 	public void printWorld() {
 		System.out.print(currentRoom.getRoomAsString(player));
+	}
+	
+	public void showPlayerLevels(){
+		System.out.println(player.toString());
 	}
 }

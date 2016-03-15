@@ -9,6 +9,8 @@ public class Player extends Fighter implements Drawable {
 		super("Player", maxHealth, 10, 7, 3, 2);
 		this.x = x;
 		this.y = y;
+		level = 1;
+		xp = 0;
 	}
 	
 	public void move(int dir){
@@ -31,11 +33,13 @@ public class Player extends Fighter implements Drawable {
 			}
 		}
 	}
-
+	
+	@Override
 	public int getX() {
 		return x;
 	}
-
+	
+	@Override
 	public int getY() {
 		return y;
 	}
@@ -48,7 +52,53 @@ public class Player extends Fighter implements Drawable {
 		this.y = y;
 	}
 	
+	public void addXp(int xp){
+		this.xp += xp;
+		if(this.xp >= xpToNextLevel()) levelUp();
+		
+	}
+	
+	private int xpToNextLevel(){
+		int sum = 0;
+		for(int i=1; i<=level; i++){
+			sum += (int)Math.floor(i+30*Math.pow(2, i/3.7d));
+		}
+		return sum;
+	}
+	
+	@Override
+	protected void levelUp(){
+		super.levelUp();
+		level++;
+		System.out.println("You have leveled up. You are now level " + level);
+	}
+	
+	@Override
 	public String getImage(){
 		return SWORD + "" + MAN;
+	}
+	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		int nextlvlxp = xpToNextLevel();
+		sb.append("You are level ");
+		sb.append(level);
+		sb.append(", you have ");
+		sb.append(xp);
+		sb.append("xp. Next level at ");
+		sb.append(nextlvlxp);
+		sb.append("xp. Experience needed for next level: ");
+		sb.append(nextlvlxp-xp);
+		sb.append("\nStrength: ");
+		sb.append(getAttackPower());
+		sb.append("\nAccuracy: ");
+		sb.append(getAttackAccuracy());
+		sb.append("\nDefense: ");
+		sb.append(getDefense());
+		sb.append("\nAgility: ");
+		sb.append(getAgility());
+		sb.append("\n");
+		return sb.toString();
 	}
 }

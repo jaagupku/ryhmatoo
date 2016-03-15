@@ -93,6 +93,22 @@ public class Room {
 		return true;
 	}
 	
+	public Monster getMonsterAt(int x, int y){
+		for(Monster m : monsters){
+			if(m.getX() == x && m.getY() == y) return m;
+		}
+		return null;
+	}
+	
+	public void updateMonsters(){
+		TestDeadMonster test = new TestDeadMonster();
+		monsters.removeIf(test);
+		
+		for(Monster m : monsters){
+			System.out.println(m.getName() + " did something.");
+		}
+	}
+	
 	public String getRoomAsString(Player player){
 		// Tagastab ruumi sõnena, eesmärgiga, et välja printida.
 		// Luuakse StringBuilder, mahuga (ruumiSuurusX*2+1)*ruumiSuurusY()

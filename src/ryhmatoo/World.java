@@ -25,7 +25,40 @@ public class World {
 	}
 	
 	public void playerAttack(int dir){
-		
+		int x = 0;
+		int y = 0;
+		switch(dir){
+		case World.NORTH: {
+			x = player.getX();
+			y = player.getY()-1;
+			break;
+		}
+		case World.SOUTH: {
+			x = player.getX();
+			y = player.getY()+1;
+			break;
+		}
+		case World.WEST: {
+			x = player.getX()-1;
+			y = player.getY();
+			break;
+		}
+		case World.EAST: {
+			x = player.getX()+1;
+			y = player.getY();
+			break;
+		}
+		}
+		Monster m = currentRoom.getMonsterAt(x, y);
+		if(m != null){
+			player.attackOther(m);
+		} else {
+			System.out.println("You swing your sword in empty air.\nIt was pointless.");
+		}
+	}
+	
+	public void monsterTurn(){
+		currentRoom.updateMonsters();
 	}
 	
 	public void movePlayer(int dir) {

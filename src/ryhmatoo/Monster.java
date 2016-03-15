@@ -1,36 +1,26 @@
 package ryhmatoo;
 
-public class Monster implements Fighter, Drawable {
+import java.util.function.Predicate;
+
+public class Monster extends Fighter implements Drawable{
 	private int x, y;
 	private int maxHealth, health;
+	private String image;
+	private static final String[][] monsterNames = {{"TestMonster1", "T1"}, {"TestMonster2", "T2"}};
+	private static int monsterStats[][] = {{14, 10, 5, 3, 1},
+										   {25, 15, 7, 4, 2}};
 	
 	public Monster(int x, int y, int id) {
-		super();
+		super(monsterNames[id][0], monsterStats[id][0], monsterStats[id][1],
+				monsterStats[id][2], monsterStats[id][3], monsterStats[id][4]);
+		image = monsterNames[id][1];
 		this.x = x;
 		this.y = y;
-		switch(id){
-			/* TODO
-			 * Koletised id järgi, näiteks, kui id on 0, siis see tähendab, 
-			 * et koletis on zombi, kellel on x elusi, y damage jne
-			 * kui id 1, siis näiteks on Hiigel rott vms ja eludega z. Või näiteks 
-			 * Et siis on elusi randomiga. Random.nextInt(10)+30 annab suvalise numbri 30-39
-			 * ja muud ka umbes nii.
-			 */
-		}
-	}
-	@Override
-	public void attackOther(Fighter o) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void defendFromAttack(int dmg) {
-		// TODO Auto-generated method stub
 		
 	}
 	
 	public String getImage(){
-		return "Mo"; //TODO
+		return image;
 	}
 	
 	public int getX() {

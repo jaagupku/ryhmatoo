@@ -1,17 +1,14 @@
 package ryhmatoo;
 
-public class Player implements Fighter, Drawable {
+public class Player extends Fighter implements Drawable {
 	private int x, y;
-	private int maxHealth, health;
 	private int xp, level;
 	private final char SWORD = 'i', MAN = '\u263A';
 	
 	public Player(int x, int y, int maxHealth) {
-		super();
+		super("Player", maxHealth, 10, 7, 3, 2);
 		this.x = x;
 		this.y = y;
-		this.maxHealth = maxHealth;
-		health = maxHealth;
 	}
 	
 	public void move(Room r, int dir){
@@ -71,17 +68,5 @@ public class Player implements Fighter, Drawable {
 	
 	public String getImage(){
 		return SWORD + "" + MAN;
-	}
-
-	@Override
-	public void attackOther(Fighter o) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void defendFromAttack(int dmg) {
-		// TODO Auto-generated method stub
-		
 	}
 }

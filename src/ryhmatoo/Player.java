@@ -6,7 +6,7 @@ public class Player extends Fighter implements Drawable {
 	private final char SWORD = 'i', MAN = '\u263A';
 	
 	public Player(int x, int y, int maxHealth) {
-		super("Player", maxHealth, 10, 7, 3, 2);
+		super("Player", maxHealth, 10, 7, 3, 3);
 		this.x = x;
 		this.y = y;
 		level = 1;

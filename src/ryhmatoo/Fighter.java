@@ -9,6 +9,11 @@ public class Fighter {
 	private int maxHealth, health;
 	private int attackPower, attackAccuracy;
 	private int defense, agility;
+	// attackPower on max damage, attackAccuracy veeretab täringut vastase agility vastu ehk täpsus
+	// kui ründaja võidab täpsusega siis veeretatakse veeretatakse täringut attackPoweriga, saadakse damage
+	// siis vastane veeretab defence*2-1 täringut ja kui see on suurem kui
+	// dmg ründaja poolt, siis blokeerib selle rünnaku
+	
 	
 	public Fighter(String name, int maxHealth,  int attackPower, int attackAccuracy, int defense, int agility) {
 		super();
@@ -23,7 +28,7 @@ public class Fighter {
 	
 	public int attackOther(Fighter o){
 		int dmg = rng.nextInt(attackPower);
-		if(rng.nextInt(attackAccuracy) > o.getAgility()){
+		if(rng.nextInt(attackAccuracy) > rng.nextInt(o.getAgility())){
 			System.out.println(getName() + " attacks " + o.getName());
 			o.defendFromAttack(dmg);
 			return dmg;
@@ -62,7 +67,7 @@ public class Fighter {
 		attackPower += 2;
 		attackAccuracy += 1;
 		defense += 1;
-		agility = defense % 2 == 0 ? agility+1 : agility;
+		agility += 1;
 	}
 	
 	public int getDefense(){

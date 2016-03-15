@@ -6,14 +6,18 @@ public class Monster extends Fighter implements Drawable{
 	private int x, y;
 	private int maxHealth, health;
 	private String image;
-	private static final String[][] monsterNames = {{"TestMonster1", "T1"}, {"TestMonster2", "T2"}};
-	private static int monsterStats[][] = {{140, 7, 5, 3, 1},
-										   {25, 11, 7, 4, 2}};
+	// monsterStrings ja monsterStats on kahedimensioonilised massiivid.
+	// monster______[id][tunnus]
+	// monsterStrings'il on {"koletise nimi", "kahe täheline string, mis on kaardil näha"}
+	// monsterStats'il on {max elud, attack power, attack accuracy, defense, agility}
+	private static final String[][] monsterStrings = {{"TestMonster1", "T1"}, {"TestMonster2", "T2"}};
+	private static final int monsterStats[][] = {{140, 7, 5, 3, 3},
+										   {25, 11, 7, 4, 4}};
 	
 	public Monster(int x, int y, int id) {
-		super(monsterNames[id][0], monsterStats[id][0], monsterStats[id][1],
+		super(monsterStrings[id][0], monsterStats[id][0], monsterStats[id][1],
 				monsterStats[id][2], monsterStats[id][3], monsterStats[id][4]);
-		image = monsterNames[id][1];
+		image = monsterStrings[id][1];
 		this.x = x;
 		this.y = y;
 		

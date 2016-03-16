@@ -102,7 +102,7 @@ public class Room {
 		}
 		return null;
 	}
-	
+
 	public void updateMonsters(Player player) {
 		// Eemaldab kõik surnud koletised listist.
 		monsters.removeIf(new TestDeadMonster());
@@ -114,19 +114,32 @@ public class Room {
 			// Kui mitte siis seisab niisama või ründab mängijat.
 			if (distanceFromPlayerSquared > 2) {
 				List<Integer> freeDirections = getFreeDirections(m.getX(), m.getY());
-				m.move(freeDirections.get(rng.nextInt(freeDirections.size())));
+				if (m.getY() <= 0)
+					freeDirections.remove((Integer) World.NORTH);
+				else if (m.getY() >= getSizeY()-1)
+					freeDirections.remove((Integer) World.SOUTH);
+				if (m.getX() <= 0)
+					freeDirections.remove((Integer) World.WEST);
+				else if (m.getX() >= getSizeX()-1)
+					freeDirections.remove((Integer) World.EAST);
+				if(freeDirections.size() > 0)
+					m.move(freeDirections.get(rng.nextInt(freeDirections.size())));
 			} else if (distanceFromPlayerSquared == 1) {
 				m.attackOther(player);
 			}
 		}
 	}
-	
-	public List<Integer> getFreeDirections(int x, int y){
+
+	public List<Integer> getFreeDirections(int x, int y) {
 		List<Integer> freeDirections = new ArrayList<Integer>();
-		if(isCellEmpty(x, y - 1)) freeDirections.add(World.NORTH);
-		if(isCellEmpty(x, y + 1)) freeDirections.add(World.SOUTH);
-		if(isCellEmpty(x - 1, y)) freeDirections.add(World.WEST);
-		if(isCellEmpty(x + 1, y)) freeDirections.add(World.EAST);
+		if (isCellEmpty(x, y - 1))
+			freeDirections.add(World.NORTH);
+		if (isCellEmpty(x, y + 1))
+			freeDirections.add(World.SOUTH);
+		if (isCellEmpty(x - 1, y))
+			freeDirections.add(World.WEST);
+		if (isCellEmpty(x + 1, y))
+			freeDirections.add(World.EAST);
 		return freeDirections;
 	}
 

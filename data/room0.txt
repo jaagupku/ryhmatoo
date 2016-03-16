@@ -27,8 +27,8 @@ map_tiles=
 111111111111
 ;
 // player_spawn peab olema ruum0-is. Teistes vahet pole.
-player_spawn=9,7;
+player_spawn=9,1;
 //          x,y,monster_id
 add_monster=1,1,0;
 add_monster=4,3,1;
-add_monster=9,6,0;
+add_monster=9,6,2;

@@ -62,6 +62,21 @@ public class Menu {
 		String input;
 		System.out.println("Type \"help\" for help or \"exit\" to exit game.");
 		while (true) {
+			// Kontrollib kas mäng on vahepeal läbi saanud või mitte.
+			int gameState = Game.world.getGameState();
+			if (gameState != Game.world.GAME_NOT_OVER) {
+				if (gameState == Game.world.PLAYER_LOSE) {
+					System.out.println("Game over! You died.");
+					System.out.println("\n\n");
+					displayWelcomeScreen();
+					break;
+				} else if (gameState == Game.world.PLAYER_WIN) {
+					System.out.println("You win! You are the best!");
+					System.out.println("\n\n");
+					displayWelcomeScreen();
+					break;
+				}
+			}
 			// Küsib kasutajalt käsku
 			input = sc.nextLine();
 			if (input.equalsIgnoreCase("exit")) { // Kui oli exit, siis väljub
@@ -148,8 +163,7 @@ public class Menu {
 		} else if (command[0].equalsIgnoreCase("help")) {
 			System.out.println("Commands:\nmove <north|south|west|east> - to move around.\nlook - shows map\n"
 					+ "look auto - if on then prints world out after moving\n"
-					+ "attack <north|south|west|east> - attacks in that direction.\n"
-					+ "levels - shows your levels.\n"
+					+ "attack <north|south|west|east> - attacks in that direction.\n" + "levels - shows your levels.\n"
 					+ "take - pickes up an item below player.\nexit - exits game mode.");
 		} else {
 			System.out.println("What was that? I don't know that word...");

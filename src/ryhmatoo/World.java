@@ -6,6 +6,7 @@ import java.util.List;
 
 public class World {
 	public static final int NORTH = 0, SOUTH = 1, WEST = 2, EAST = 3; // Directions
+	public static final int PLAYER_LOSE = 6, GAME_NOT_OVER = 7, PLAYER_WIN = 8;
 	private Player player;
 	private List<Room> rooms = new ArrayList<Room>();
 	private Room currentRoom;
@@ -85,5 +86,12 @@ public class World {
 	
 	public void showPlayerLevels(){
 		System.out.println(player.toString());
+	}
+
+	public int getGameState() {
+		if(player.getHealth() <= 0)
+			return PLAYER_LOSE;
+		// TODO Game can't be won.
+		return GAME_NOT_OVER;
 	}
 }

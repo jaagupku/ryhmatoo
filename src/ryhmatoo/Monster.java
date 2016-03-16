@@ -1,5 +1,13 @@
 package ryhmatoo;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import org.omg.Messaging.SyncScopeHelper;
+
 public class Monster extends Fighter implements Drawable {
 	private int x, y;
 	private int maxHealth, health;
@@ -10,16 +18,37 @@ public class Monster extends Fighter implements Drawable {
 	// kaardil näha"}
 	// monsterStats'il on {max elud, attack power, attack accuracy, defense,
 	// agility}
-	private static final String[][] monsterStrings = { { "Giant rat", "gR" }, { "Giant Snake", "gS" },
-			{ "Skeleton", "Sk" } };
-	private static final int monsterStats[][] = { { 8, 3, 3, 2, 2 }, { 13, 6, 7, 2, 4 }, { 30, 11, 10, 5, 3 } };
+	
+	private static List<String[]> names = new ArrayList<String[]>();
+	private static List<int[]> stats = new ArrayList<int[]>();
 
 	public Monster(int x, int y, int id) {
-		super(monsterStrings[id][0], monsterStats[id][0], monsterStats[id][1], monsterStats[id][2], monsterStats[id][3],
-				monsterStats[id][4]);
-		image = monsterStrings[id][1];
+		super(names.get(id)[0], stats.get(id)[0], stats.get(id)[1], stats.get(id)[2], stats.get(id)[3], stats.get(id)[4]);
+		image = names.get(id)[1];
 		this.x = x;
 		this.y = y;
+
+	}
+
+	public static void loadMonstersFromFile(File f) {
+		Scanner sc;
+		try {
+			sc = new Scanner(f);
+			while (sc.hasNextLine()) {
+				String line = sc.nextLine();
+				if(line.startsWith("//") || line.length() < 14)
+					continue;
+				String[] data = line.split(",");
+				String[] name = { data[0], data[1] };
+				names.add(name);
+				int[] stat = { Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]),
+						Integer.parseInt(data[5]), Integer.parseInt(data[6]) };
+				stats.add(stat);
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Failed to load monsters.");
+			e.printStackTrace();
+		}
 
 	}
 

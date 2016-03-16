@@ -13,11 +13,14 @@
 
 package ryhmatoo;
 
+import java.io.File;
+
 public class Game {
 
 	static World world;
 
 	public static void main(String[] args) {
+		Monster.loadMonstersFromFile(new File("data\\monsters.txt"));
 		world = new World();
 		Menu.mainMenu();
 

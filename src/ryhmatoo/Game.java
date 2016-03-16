@@ -8,10 +8,8 @@
  * 
  */
 
-
 // Et eclipses värvid ka töötaksid
 //https://marketplace.eclipse.org/content/ansi-escape-console
-
 
 package ryhmatoo;
 
@@ -22,6 +20,6 @@ public class Game {
 	public static void main(String[] args) {
 		world = new World();
 		Menu.mainMenu();
-		
+
 	}
 }

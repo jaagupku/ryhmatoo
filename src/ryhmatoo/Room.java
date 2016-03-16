@@ -116,13 +116,13 @@ public class Room {
 				List<Integer> freeDirections = getFreeDirections(m.getX(), m.getY());
 				if (m.getY() <= 0)
 					freeDirections.remove((Integer) World.NORTH);
-				else if (m.getY() >= getSizeY()-1)
+				else if (m.getY() >= getSizeY() - 1)
 					freeDirections.remove((Integer) World.SOUTH);
 				if (m.getX() <= 0)
 					freeDirections.remove((Integer) World.WEST);
-				else if (m.getX() >= getSizeX()-1)
+				else if (m.getX() >= getSizeX() - 1)
 					freeDirections.remove((Integer) World.EAST);
-				if(freeDirections.size() > 0)
+				if (freeDirections.size() > 0)
 					m.move(freeDirections.get(rng.nextInt(freeDirections.size())));
 			} else if (distanceFromPlayerSquared == 1) {
 				m.attackOther(player);

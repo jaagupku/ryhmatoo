@@ -1,12 +1,12 @@
 package ryhmatoo;
 
-public class Item  implements Drawable {
+public class Item implements Drawable {
 	private int x, y;
 	private String name;
 	private boolean taken;
 	private String img;
 
-	public Item(int x, int y, String name, String img){
+	public Item(int x, int y, String name, String img) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -14,15 +14,15 @@ public class Item  implements Drawable {
 		this.img = img;
 		taken = false;
 	}
-	
-	public void setTaken(boolean b){
+
+	public void setTaken(boolean b) {
 		taken = b;
 	}
-	
-	public boolean isTaken(){
+
+	public boolean isTaken() {
 		return taken;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -41,5 +41,5 @@ public class Item  implements Drawable {
 	public String getImage() {
 		return img;
 	}
-	
+
 }

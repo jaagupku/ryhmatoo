@@ -43,9 +43,6 @@ public class Fighter {
 	public void defendFromAttack(int dmg) {
 		if (rng.nextInt(getDefense() * 2 - 1) < dmg) {
 			takeDamage(dmg);
-			if (health > 0)
-				System.out.println(
-						getName() + " got damaged for " + dmg + " hitpoints, it now has " + getHealth() + " health.");
 		} else {
 			System.out.println(getName() + " successfully blocked the attack.");
 		}
@@ -53,9 +50,13 @@ public class Fighter {
 
 	private void takeDamage(int dmg) {
 		health -= dmg;
+		System.out.print(getName() + " got damaged for " + dmg + " hitpoints");
 		if (health <= 0) {
 			health = 0;
+			System.out.println(".");
 			System.out.println(getName() + " is now dead.");
+		} else {
+			System.out.println(" it now has " + getHealth() + " health.");
 		}
 	}
 

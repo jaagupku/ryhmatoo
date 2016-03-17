@@ -66,12 +66,14 @@ public class Menu {
 			if (gameState != Game.world.GAME_NOT_OVER) {
 				if (gameState == Game.world.PLAYER_LOSE) {
 					System.out.println("Game over! You died.");
-					System.out.println("\n\n");
+					System.out.println("Press enter to continue.\n\n");
+					sc.nextLine();
 					displayWelcomeScreen();
 					break;
 				} else if (gameState == Game.world.PLAYER_WIN) {
 					System.out.println("You win! You are the best!");
-					System.out.println("\n\n");
+					System.out.println("Press enter to continue.\n\n");
+					sc.nextLine();
 					displayWelcomeScreen();
 					break;
 				}

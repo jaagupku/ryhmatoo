@@ -20,9 +20,12 @@ public class Game {
 	static World world;
 
 	public static void main(String[] args) {
-		Monster.loadMonstersFromFile(new File("data\\monsters.txt"));
-		world = new World();
 		Menu.mainMenu();
 
+	}
+	
+	public static void load_world(){
+		Monster.loadMonstersFromFile(new File("data\\monsters.txt"));
+		world = new World();
 	}
 }

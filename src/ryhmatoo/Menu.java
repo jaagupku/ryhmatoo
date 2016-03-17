@@ -58,6 +58,7 @@ public class Menu {
 	}
 
 	private static void game() {
+		Game.load_world();
 		String input;
 		System.out.println("Type \"help\" for help or \"exit\" to exit game.");
 		while (true) {

@@ -93,6 +93,12 @@ public class World {
 	}
 
 	public int getGameState() {
+		int nMonsters = 0;
+		for(Room r : rooms){
+			nMonsters += r.getNumberOfMonsters();
+		}
+		if(nMonsters == 0)
+			return PLAYER_WIN;
 		if (player.getHealth() <= 0)
 			return PLAYER_LOSE;
 		// TODO Game can't be won.

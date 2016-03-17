@@ -241,6 +241,10 @@ public class Room {
 	public int getEntranceY() {
 		return entranceY;
 	}
+	
+	public int getNumberOfMonsters(){
+		return monsters.size();
+	}
 
 	private void setEntranceX(int entranceX) {
 		if (entranceX < 0)

@@ -105,7 +105,7 @@ public class Room {
 
 	public void updateMonsters(Player player) {
 		// Eemaldab kõik surnud koletised listist.
-		monsters.removeIf(new TestDeadMonster());
+		monsters.removeIf(monster -> monster.getHealth() < 1);
 		for (Monster m : monsters) {
 			double distanceFromPlayerSquared = Math.pow(m.getX() - player.getX(), 2)
 					+ Math.pow(m.getY() - player.getY(), 2);

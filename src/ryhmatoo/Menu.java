@@ -64,14 +64,14 @@ public class Menu {
 		while (true) {
 			// Kontrollib kas mäng on vahepeal läbi saanud või mitte.
 			int gameState = Game.world.getGameState();
-			if (gameState != Game.world.GAME_NOT_OVER) {
-				if (gameState == Game.world.PLAYER_LOSE) {
+			if (gameState != World.GAME_NOT_OVER) {
+				if (gameState == World.PLAYER_LOSE) {
 					System.out.println("Game over! You died.");
 					System.out.println("Press enter to continue.\n\n");
 					sc.nextLine();
 					displayWelcomeScreen();
 					break;
-				} else if (gameState == Game.world.PLAYER_WIN) {
+				} else if (gameState == World.PLAYER_WIN) {
 					System.out.println("You win! You are the best!");
 					System.out.println("Press enter to continue.\n\n");
 					sc.nextLine();

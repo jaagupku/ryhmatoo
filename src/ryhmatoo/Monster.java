@@ -6,11 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.omg.Messaging.SyncScopeHelper;
-
 public class Monster extends Fighter implements Drawable {
 	private int x, y;
-	private int maxHealth, health;
 	private String image;
 	// monsterStrings ja monsterStats on kahedimensioonilised massiivid.
 	// monster______[id][tunnus]
@@ -30,7 +27,7 @@ public class Monster extends Fighter implements Drawable {
 
 	}
 
-	public static void loadMonstersFromFile(File f) {
+	static void loadMonstersFromFile(File f) {
 		Scanner sc;
 		try {
 			sc = new Scanner(f);
@@ -54,10 +51,10 @@ public class Monster extends Fighter implements Drawable {
 
 	public void move(int dir) {
 		switch (dir) {
-		case World.NORTH: {
+			case World.NORTH: {
 			setY(getY() - 1);
 			break;
-		}
+			}
 		case World.SOUTH: {
 			setY(getY() + 1);
 			break;
